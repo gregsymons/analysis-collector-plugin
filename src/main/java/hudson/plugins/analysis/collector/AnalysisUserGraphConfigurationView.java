@@ -1,6 +1,7 @@
 package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.graph.GraphConfiguration;
 import hudson.plugins.analysis.graph.UserGraphConfigurationView;
@@ -21,20 +22,18 @@ public class AnalysisUserGraphConfigurationView extends UserGraphConfigurationVi
 
     /**
      * Creates a new instance of {@link AnalysisUserGraphConfigurationView}.
-     *
-     * @param configuration
+     *  @param configuration
      *            the graph configuration
      * @param project
      *            the owning project to configure the graphs for
      * @param pluginName
-     *            The name of the plug-in. Also used as the suffix of the cookie
-     *            name that is used to persist the configuration per user.
+ *            The name of the plug-in. Also used as the suffix of the cookie
+ *            name that is used to persist the configuration per user.
      * @param cookies
-     *            the cookies containing the graph configuration
+*            the cookies containing the graph configuration
      * @param buildHistory
-     *            the build history for this project
      */
-    public AnalysisUserGraphConfigurationView(final AnalysisGraphConfiguration configuration, final AbstractProject<?, ?> project,
+    public AnalysisUserGraphConfigurationView(final AnalysisGraphConfiguration configuration, final Job<?, ?> project,
             final String pluginName, final Cookie[] cookies, final BuildHistory buildHistory) {
         super(configuration, project, pluginName, cookies, buildHistory);
 

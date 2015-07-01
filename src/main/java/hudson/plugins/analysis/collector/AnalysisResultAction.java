@@ -1,6 +1,14 @@
 package hudson.plugins.analysis.collector;
 
+import java.util.Collection;
+import java.util.Collections;
+
+import jenkins.tasks.SimpleBuildStep;
+
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
+import hudson.model.Run;
+import hudson.plugins.analysis.collector.WarningsCountColumn.ColumnDescriptor;
 import hudson.plugins.analysis.core.HealthDescriptor;
 import hudson.plugins.analysis.core.PluginDescriptor;
 import hudson.plugins.analysis.core.AbstractResultAction;
@@ -16,18 +24,16 @@ import hudson.plugins.analysis.core.AbstractResultAction;
  *
  * @author Ulli Hafner
  */
-public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
+public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> implements SimpleBuildStep.LastBuildAction {
     /**
      * Creates a new instance of {@link AbstractResultAction}.
-     *
-     * @param owner
+     *  @param owner
      *            the associated build of this action
      * @param healthDescriptor
      *            health descriptor to use
      * @param result
-     *            the result of this build
      */
-    public AnalysisResultAction(final AbstractBuild<?, ?> owner, final HealthDescriptor healthDescriptor, final AnalysisResult result) {
+    public AnalysisResultAction(final Run<?, ?> owner, final HealthDescriptor healthDescriptor, final AnalysisResult result) {
         super(owner, new AnalysisHealthDescriptor(healthDescriptor), result);
     }
 
@@ -39,5 +45,10 @@ public class AnalysisResultAction extends AbstractResultAction<AnalysisResult> {
     @Override
     protected PluginDescriptor getDescriptor() {
         return new AnalysisDescriptor();
+    }
+
+    @Override
+    public Collection<? extends Action> getProjectActions() {
+        return Collections.singleton(new AnalysisProjectAction(getOwner().getParent(), AnalysisResultAction.class));
     }
 }

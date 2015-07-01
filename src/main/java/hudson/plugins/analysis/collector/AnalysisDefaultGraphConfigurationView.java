@@ -1,6 +1,7 @@
 package hudson.plugins.analysis.collector;
 
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.graph.DefaultGraphConfigurationView;
 import hudson.plugins.analysis.graph.GraphConfiguration;
@@ -22,17 +23,15 @@ public class AnalysisDefaultGraphConfigurationView extends DefaultGraphConfigura
 
     /**
      * Creates a new instance of {@link AnalysisDefaultGraphConfigurationView}.
-     *
-     * @param configuration
+     *  @param configuration
      *            the graph configuration
      * @param project
      *            the owning project to configure the graphs for
      * @param pluginName
-     *            The name of the plug-in.
+ *            The name of the plug-in.
      * @param buildHistory
-     *            the build history for this project
      */
-    public AnalysisDefaultGraphConfigurationView(final AnalysisGraphConfiguration configuration, final AbstractProject<?, ?> project,
+    public AnalysisDefaultGraphConfigurationView(final AnalysisGraphConfiguration configuration, final Job<?, ?> project,
             final String pluginName, final BuildHistory buildHistory) {
         super(configuration, project, pluginName, buildHistory);
 

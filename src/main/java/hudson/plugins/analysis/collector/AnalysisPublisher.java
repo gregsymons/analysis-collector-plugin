@@ -7,13 +7,15 @@ import java.util.List;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import hudson.FilePath;
 import hudson.Launcher;
 import hudson.matrix.MatrixAggregator;
 import hudson.matrix.MatrixBuild;
-import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.BuildListener;
+import hudson.model.Run;
+import hudson.model.TaskListener;
 import hudson.plugins.analysis.collector.handler.*;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.HealthAwarePublisher;
@@ -232,8 +234,8 @@ public class AnalysisPublisher extends HealthAwarePublisher {
     }
 
     @Override
-    public BuildResult perform(final AbstractBuild<?, ?> build, final PluginLogger logger) throws InterruptedException, IOException {
-        ParserResult overallResult = new ParserResult(build.getWorkspace());
+    public BuildResult perform(final Run<?, ?> build, final FilePath workspace, final TaskListener listener, final PluginLogger logger) throws InterruptedException, IOException {
+        ParserResult overallResult = new ParserResult(workspace);
         for (Class<? extends ResultAction<? extends BuildResult>> result : getParticipatingPlugins()) {
             ResultAction<? extends BuildResult> action = build.getAction(result);
             if (action != null) {

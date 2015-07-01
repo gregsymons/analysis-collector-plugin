@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.plugins.analysis.core.BuildHistory;
 import hudson.plugins.analysis.core.BuildResult;
 import hudson.plugins.analysis.core.ParserResult;
@@ -29,27 +30,25 @@ public class AnalysisResult extends BuildResult {
 
     /**
      * Creates a new instance of {@link AnalysisResult}.
-     *
-     * @param build
+     *  @param build
      *            the current build as owner of this action
      * @param defaultEncoding
      *            the default encoding to be used when reading and parsing files
      * @param result
-     *            the parsed result with all annotations
+ *            the parsed result with all annotations
      * @param usePreviousBuildAsReference
-     *            determines whether the previous build should be used as the
-     *            reference build
+*            determines whether the previous build should be used as the
+*            reference build
      * @param useStableBuildAsReference
-     *            determines whether only stable builds should be used as
-     *            reference builds or not
+*            determines whether only stable builds should be used as
      */
-    public AnalysisResult(final AbstractBuild<?, ?> build, final String defaultEncoding, final ParserResult result,
+    public AnalysisResult(final Run<?, ?> build, final String defaultEncoding, final ParserResult result,
             final boolean usePreviousBuildAsReference, final boolean useStableBuildAsReference) {
         this(build, new BuildHistory(build, AnalysisResultAction.class, usePreviousBuildAsReference, useStableBuildAsReference),
                 result, defaultEncoding, true);
     }
 
-    AnalysisResult(final AbstractBuild<?, ?> build, final BuildHistory history,
+    AnalysisResult(final Run<?, ?> build, final BuildHistory history,
             final ParserResult result, final String defaultEncoding, final boolean canSerialize) {
         super(build, history, result, defaultEncoding);
 
